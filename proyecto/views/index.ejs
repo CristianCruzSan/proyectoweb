@@ -9,7 +9,6 @@
 <body>
     <div class="container">
         <h1>Lista de Usuarios</h1>
-        
 
         <a href="/add" class="btn btn-add">Agregar Usuario</a>
 
@@ -19,10 +18,10 @@
                     <th>Nombre</th>
                     <th>Apellido Paterno</th>
                     <th>Apellido Materno</th>
+                    <th>Escuela</th> 
                     <th>Carrera</th>
                     <th>Teléfono</th>
                     <th>Correo</th>
-                    <th>Status</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -32,10 +31,10 @@
                         <td><%= user.nombre %></td>
                         <td><%= user.apellido_paterno %></td>
                         <td><%= user.apellido_materno %></td>
+                        <td><%= user.escuela %></td> 
                         <td><%= user.carrera %></td>
                         <td><%= user.telefono %></td>
                         <td><%= user.correo %></td>
-                        <td><%= user.status %></td>
                         <td>
                             <a href="/edit/<%= user.id %>" class="btn btn-edit">Editar</a>
                             <a href="/delete/<%= user.id %>" class="btn btn-delete">Eliminar</a>

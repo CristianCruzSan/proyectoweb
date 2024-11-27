@@ -32,17 +32,18 @@ db.connect(err => {
     }
 });
 
+
 // Iniciar el servidor
 /*
 const port = 3009;
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Servidor en funcionamiento desde http://192.168.100.25:${port}`);
+app.listen(port, () => {
+    console.log(`Servidor en funcionamiento desde http://localhost:${port}`);
 });
 */
 
 const port = 3009;
-app.listen(port,()=>{
-    console.log(`Servidor en funcionamiento desde http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Servidor en funcionamiento desde http://192.168.100.25:${port}`);
 });
 
 // Ruta principal: mostrar la lista de usuarios
@@ -66,23 +67,19 @@ app.get('/add', (req, res) => {
 });
 
 // Agregar un nuevo usuario
-// Agregar un nuevo usuario
 app.post('/add', (req, res) => {
-    const { nombre, apellido_paterno, apellido_materno, carrera, telefono, correo, status } = req.body;
-    const query = 'INSERT INTO users (nombre, apellido_paterno, apellido_materno, carrera, telefono, correo, status) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    
-    db.query(query, [nombre, apellido_paterno, apellido_materno, carrera, telefono, correo, status], (err) => {
+    const { nombre, apellido_paterno, apellido_materno, escuela, carrera, telefono, correo } = req.body;
+    const query = 'INSERT INTO users (nombre, apellido_paterno, apellido_materno, escuela, carrera, telefono, correo) VALUES (?, ?, ?, ?, ?, ?, ?)';
+
+    db.query(query, [nombre, apellido_paterno, apellido_materno, escuela, carrera, telefono, correo], (err) => {
         if (err) {
             console.error('Error al agregar usuario:', err);
             res.send('Error');
         } else {
-            // Redirigir al índice sin mensaje
             res.redirect('/');
         }
     });
 });
-
-
 
 // Mostrar formulario de edición de usuario
 app.get('/edit/:id', (req, res) => {
@@ -101,20 +98,20 @@ app.get('/edit/:id', (req, res) => {
 // Actualizar usuario
 app.post('/edit/:id', (req, res) => {
     const { id } = req.params;
-    const { nombre, apellido_paterno, apellido_materno, carrera, telefono, correo, status } = req.body;
+    const { nombre, apellido_paterno, apellido_materno, escuela, carrera, telefono, correo } = req.body;
 
     const query = `
         UPDATE users 
-        SET nombre = ?, apellido_paterno = ?, apellido_materno = ?, carrera = ?, telefono = ?, correo = ?, status = ?
+        SET nombre = ?, apellido_paterno = ?, apellido_materno = ?, escuela = ?, carrera = ?, telefono = ?, correo = ?
         WHERE id = ?
     `;
-    
-    db.query(query, [nombre, apellido_paterno, apellido_materno, carrera, telefono, correo, status, id], (err) => {
+
+    db.query(query, [nombre, apellido_paterno, apellido_materno, escuela, carrera, telefono, correo, id], (err) => {
         if (err) {
             console.error('Error al actualizar usuario:', err);
             res.send('Error');
         } else {
-            res.redirect('/'); // Redirigir a la lista de usuarios después de editar
+            res.redirect('/');
         }
     });
 });
@@ -128,7 +125,7 @@ app.get('/delete/:id', (req, res) => {
             console.error('Error al eliminar usuario:', err);
             res.send('Error');
         } else {
-            res.redirect('/'); // Redirigir a la lista de usuarios después de eliminar
+            res.redirect('/');
         }
     });
 });
